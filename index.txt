@@ -1,0 +1,141 @@
+git hubの使い方
+
+For Mac
+
+（１）Git: 　変更箇所を記録するもの。
+
+① 　Gitをインストールする。 https://git-scm.com/
+
+② 　Terminalで、バージョンを確認してみる。
+コマンド：　git version
+
+③ 　Terminalで、作業用フォルダー（workspace)を作成する。
+
+mkdir workspace
+
+④ Terminalで 、作業用のホルダーに移動する。
+cd workspace
+
+⑤ Git用の初期設定を行う（隠しファイル 「.git 」の作成）。
+git init
+
+ノート： ls -a を使うと、隠しファイルもみえる。
+
+⑥　作業用スペースに、目的のファイル(index.html)を作る。
+例：touch index.html 
+
+⑦ 目的のファイル(index.html)を　gitのバージョン管理下(.git)に設定する。
+git add index.html
+
+ノート：状態確認： git status
+
+⑧ コミットメッセージの追加
+git commit
+
+→ エディターモードに以降
+編集モードコマンド： a
+説明用のメッセージを記載する： 例： intial commit
+編集モードから抜ける：escボタンを押す
+保存して閉じるコマンド 「：wq　」
+コミットの履歴の確認：git log
+履歴の内容の確認： git show
+脱けだすコマンド　q
+
+
+（２）Github　https://github.com
+
+① リポジトリ（履歴保存ファイル）の作成
+
+　・右上の＋ボタンを押して、
+　・ 例えば、how-to-use-githubという名前で、
+　・create new repositoryをすると・・
+
+以下のようなレポジトリの名前がSSHの欄に現れる。
+git@github.com:tatsuya-noguchi/how-to-use-github.git
+　
+
+
+② SSH通信の設定をする。
+　・右上ののボタンから、Your profileを選択する。
+　・自分の写真をクリックすると、Personal settingsの画面に移動する。
+　・左側に、各種の設定項目があるので、SSH and GPG keysをクリックする。
+　・右上にあるNew SSHキーのボタンを押して、適当なTilteを入力する。
+　・keyは、自分のパソコンで作成する。
+　・ホームディレクトリに移動する。
+　　　　 cd ~/
+　・SSH通信のキー保存用のディレクトリを作る。
+　　　　　mkdir .ssh
+   
+  　・作成した　.ssh　ディレクトリ内に移動する。
+　　　　cd .ssh
+   
+　　・ SSHのKeyを作成する。
+　　　　ssh-keygen -t rsa
+ 
+     ・Keyの名前を入力する。
+              例：github_id_rsa
+
+　 ・拡張子が rsa（秘密鍵）と、pub（公開鍵）のKeyが作成される。
+　・公開鍵をみる。
+　　　less github_id_rsa.pub
+    ・公開鍵を、githubページのkeyの箇所にペーストして、Add SSH Keyボタンを押す。
+　・qで抜け出せる。
+
+　・.sshディレクトリで、configの設定をする。
+       vi config
+　
+　　・configに書きこむ内容
+
+===================================
+Host github github.com
+  HostName github.com
+  IdentityFile ~/.ssh/github_id_rsa
+  User git
+
+===================================
+
+     保存して閉じるコマンド 「：wq　」
+
+③ .sshディレクトリ内から、SSH通信を開始する。
+
+ssh -T github
+
+こんな表示が出る。
+Hi tatsuya-noguchi! You've successfully authenticated, but GitHub does not provide shell access.
+
+
+④  .gitのいるディレクトリに移動する。
+
+⑤ 　ローカルにいる　.git　ファイルを、githubに作成した
+
+レポジトリ　git@github.com:tatsuya-noguchi/how-to-use-github.git
+
+につなぐ。
+
+
+・git remote add origin git@github.com:tatsuya-noguchi/how-to-use-github.git
+
+確認； git remote → origin
+
+ローカルのレポジトリが、originという名前で、github上のhow-to-use-githubの
+レポジトリにリンクしたことを示している。
+
+⑥ 　index.htmlを、githubのレポジトリにアップロードする。
+
+git push -u origin master
+
+なお、-uは、最初のプッシュの時にだけ必要。
+
+
+
+
+
+
+
+
+
+
+
+
+（２）Jekyll
+
